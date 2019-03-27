@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Let\'s Keep In Touch</string>
+    <string name="no_text">No Text</string>
+    <string name="scan">Scan</string>
 </resources>
