@@ -123,7 +123,6 @@ public class ScanningFragment extends Fragment {
 
                 @Override
                 public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
                 }
 
                 @Override
@@ -135,7 +134,6 @@ public class ScanningFragment extends Fragment {
             textRecognizer.setProcessor(new Detector.Processor<TextBlock>() {
                 @Override
                 public void release() {
-
                 }
 
                 @Override
@@ -165,6 +163,7 @@ public class ScanningFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUESTCAMERAPERMISSION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -180,7 +179,13 @@ public class ScanningFragment extends Fragment {
             }
             break;
         }
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        cameraSource.release();
     }
 
     public void onButtonPressed(Uri uri) {
