@@ -6,13 +6,13 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class TextDatabaseHelper extends SQLiteOpenHelper {
+public class TextDatabase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ScannedText.db";
     private static final String TABLE_NAME = "ScannedText";
     private static final int SCHEMA_VERSION = 1;
 
-    public TextDatabaseHelper(Context context) {
+    public TextDatabase(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
     }
 

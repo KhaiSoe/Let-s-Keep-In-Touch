@@ -6,7 +6,11 @@
     android:background="@drawable/blackboard"
     tools:context=".fragments.SplashScreenFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/splash_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
     <TextView
         android:id="@+id/splash_textView"
         android:layout_width="match_parent"
