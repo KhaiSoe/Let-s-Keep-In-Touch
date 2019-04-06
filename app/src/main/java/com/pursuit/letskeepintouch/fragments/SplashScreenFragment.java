@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,33 +57,13 @@ public class SplashScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       /* requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.fragment_splash_screen);
-        getSupportActionBar();
-        LogoLauncher logoLauncher = new LogoLauncher();
-        logoLauncher.start();
-    }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
-    private class LogoLauncher extends Thread {
-        public void run() {
-
-            try {
-                sleep(1300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                fragmentInterface.moveToScanningFragment();
             }
-           fragmentInterface.moveToScanningFragment();
-        }
-    }
-*/
-
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                fragmentInterface.moveToScanningFragment();
-//            }
-//        }, SCREEN_TIME);
+        }, SCREEN_TIME);
 
 
     }

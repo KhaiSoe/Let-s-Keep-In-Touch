@@ -7,8 +7,8 @@
         app:showAsAction="always"
         android:icon="@drawable/github"/>
     <item
-        android:id="@+id/setting"
-        android:title="@string/setting_menu_scan"
+        android:id="@+id/linkedin"
+        android:title="@string/linkedin"
         app:showAsAction="always"
         android:icon="@drawable/linkedin_circle_black"/>
 
