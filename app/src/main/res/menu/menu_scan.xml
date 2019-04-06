@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/github_repo"
-        android:title="@string/github_repo"
+        android:id="@+id/addImage"
+        android:title="@string/add_image"
         app:showAsAction="always"
         android:icon="@drawable/ic_action_image"/>
     <item
-        android:id="@+id/setting"
+        android:id="@+id/gallery"
         android:title="@string/setting_menu_scan"
         app:showAsAction="always"
         android:icon="@drawable/ic_action_gallery"/>

@@ -30,6 +30,7 @@ public class TextDatabase extends SQLiteOpenHelper {
 
     }
 
+
 //    public void addText () {
 //        Cursor cursor = getReadableDatabase().rawQuery(
 //                "SELECT * FROM " + TABLE_NAME + " WHERE date = '" + fellow.getFirstName() +
