@@ -7,10 +7,8 @@
     android:orientation="vertical"
     tools:context=".fragments.ScanningFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/scan_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></androidx.appcompat.widget.Toolbar>
+    <include
+        layout="@layout/toolbar_layout"/>
 
     <ScrollView
         android:layout_width="match_parent"

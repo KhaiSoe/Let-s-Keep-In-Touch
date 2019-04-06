@@ -111,9 +111,11 @@ public class ScanningFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
 
-        Toolbar toolbarBar = view.findViewById(R.id.scan_toolbar);
+        Toolbar toolbarBar = view.findViewById(R.id.toolbar_scan);
         toolbarBar.inflateMenu(R.menu.menu_scan);
         toolbarBar.setTitle(getResources().getString(R.string.click_button_to_add_image));
+
+        setHasOptionsMenu(true);
 
         resultTextView = view.findViewById(R.id.show_result);
         editText = view.findViewById(R.id.scanned_result);
