@@ -1,7 +1,6 @@
 package com.pursuit.letskeepintouch.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +63,7 @@ public class SplashScreenFragment extends Fragment {
             }
             @Override
             public void onFinish() {
-                finishSplash();
+                finishSplashScreen();
             }
         };
 
@@ -73,7 +71,7 @@ public class SplashScreenFragment extends Fragment {
 
     }
 
-    private void finishSplash() {
+    private void finishSplashScreen() {
         fragmentInterface.finishSplashScreen(this);
     }
 
