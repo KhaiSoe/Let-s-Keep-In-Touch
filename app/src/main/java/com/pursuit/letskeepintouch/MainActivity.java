@@ -18,14 +18,9 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
         setContentView(R.layout.activity_main);
 
         showSplashScreen();
-
-
-
-//        moveToScanningFragment();
-        //moveToDisplayFragment();
     }
 
-    public void showSplashScreen(){
+    public void showSplashScreen() {
         SplashScreenFragment splashScreenFragment = SplashScreenFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -41,9 +36,7 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
                 .replace(R.id.fragment_container, scanningFragment)
                 .addToBackStack(null)
                 .commit();
-
     }
-
 
     @Override
     public void moveToDisplayFragment() {

@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
+        android:layout_marginStart="30dp"
         android:text="@string/title"
         android:textColor="#ffffff"
         android:textSize="40sp"
