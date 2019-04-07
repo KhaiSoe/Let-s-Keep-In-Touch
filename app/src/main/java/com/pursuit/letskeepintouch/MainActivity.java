@@ -1,6 +1,8 @@
 package com.pursuit.letskeepintouch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 
 import com.pursuit.letskeepintouch.fragments.DisplayFragment;
@@ -15,18 +17,21 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        moveToScanningFragment();
+        showSplashScreen();
+
+
+
+//        moveToScanningFragment();
+        //moveToDisplayFragment();
     }
 
-//    @Override
-//    public void showSplashScreen() {
-//        SplashScreenFragment splashScreenFragment = SplashScreenFragment.newInstance();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.fragment_container, splashScreenFragment)
-//                .addToBackStack(null)
-//                .commit();
-//    }
+    public void showSplashScreen(){
+        SplashScreenFragment splashScreenFragment = SplashScreenFragment.newInstance();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, splashScreenFragment)
+                .commit();
+    }
 
     @Override
     public void moveToScanningFragment() {
@@ -47,6 +52,20 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
                 .beginTransaction()
                 .replace(R.id.fragment_container, displayFragment)
                 .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void finishSplashScreen(Fragment fragment) {
+        closeFragment(fragment);
+        moveToScanningFragment();
+    }
+
+    @Override
+    public void closeFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .remove(fragment)
                 .commit();
     }
 }

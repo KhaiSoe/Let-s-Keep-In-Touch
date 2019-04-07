@@ -39,12 +39,13 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.pursuit.letskeepintouch.R;
+import com.pursuit.letskeepintouch.database.TextDatabase;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ScanningFragment extends Fragment{
+public class ScanningFragment extends Fragment {
 
     private EditText editText;
     private TextView resultTextView;
@@ -58,6 +59,8 @@ public class ScanningFragment extends Fragment{
 
     String cameraPermission[];
     String storagePermission[];
+
+    private FragmentInterface fragmentInterface;
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -90,12 +93,6 @@ public class ScanningFragment extends Fragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
 
@@ -123,6 +120,11 @@ public class ScanningFragment extends Fragment{
         imageView = view.findViewById(R.id.scanned_image);
         //       getTextFromImage(view);
 
+        getPermission();
+        showImageImportDialog();
+    }
+
+    private void getPermission(){
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -141,7 +143,8 @@ public class ScanningFragment extends Fragment{
             showImageImportDialog();
         }
         if (id == R.id.gallery) {
-            Toast.makeText(getContext(), "Settings", Toast.LENGTH_SHORT).show();
+            //take to display fragment
+            Toast.makeText(getContext(), "See Saved Text", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -272,40 +275,45 @@ public class ScanningFragment extends Fragment{
 
         }
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (requestCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri(); //get image uri, then set image to the view;
                 imageView.setImageURI(resultUri);
-
-                BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-                Bitmap bitmap = bitmapDrawable.getBitmap();
-
-                TextRecognizer textRecognizer = new TextRecognizer.Builder(getContext().getApplicationContext()).build();
-
-                if (!textRecognizer.isOperational()) {
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                } else {
-                    Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-                    SparseArray<TextBlock> items = textRecognizer.detect(frame);
-                    StringBuilder sb = new StringBuilder();
-                    //get text from sb until there is no text
-                    for (int i = 0; i < items.size(); i++) {
-                        TextBlock myItems = items.valueAt(i);
-                        sb.append(myItems.getValue());
-                        sb.append("/n");
-
-                    }
-                    //set text to editText
-                    editText.setText(sb.toString());
+                getTextFromCroppingImages();
+            }
+                 else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Exception error = result.getError();
+                    Toast.makeText(getContext(), " " + error, Toast.LENGTH_SHORT).show();
                 }
-            } else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-                Toast.makeText(getContext(), " " + error, Toast.LENGTH_SHORT).show();
             }
         }
-    }
 
+
+
+    private void getTextFromCroppingImages(){
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        TextRecognizer textRecognizer = new TextRecognizer.Builder(getContext().getApplicationContext()).build();
+
+        if (!textRecognizer.isOperational()) {
+            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+        } else {
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray<TextBlock> items = textRecognizer.detect(frame);
+            StringBuilder sb = new StringBuilder();
+            //get text from sb until there is no text
+            for (int i = 0; i < items.size(); i++) {
+                TextBlock myItems = items.valueAt(i);
+                sb.append(myItems.getValue());
+                sb.append("/n");
+
+            }
+            //set text to editText
+            editText.setText(sb.toString());
+            editText.append(sb.toString());
+        }
+    }
 
 //    public void onButtonPressed(Uri uri) {
 //        if (mListener != null) {
@@ -313,13 +321,18 @@ public class ScanningFragment extends Fragment{
 //        }
 //    }
 
+    private void addToDatabase() {
+        TextDatabase databaseHelper = TextDatabase.getInstance(getContext());
+        databaseHelper.addText();
+        fragmentInterface.moveToDisplayFragment();
+
+    }
 
     @Override
     public void onDetach() {
         super.onDetach();
         //mListener = null;
     }
-
 
 
 //    public interface OnFragmentInteractionListener {

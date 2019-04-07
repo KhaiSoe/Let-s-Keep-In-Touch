@@ -1,12 +1,14 @@
 package com.pursuit.letskeepintouch.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,11 @@ import android.view.ViewGroup;
 
 import com.pursuit.letskeepintouch.R;
 
+import static java.lang.Thread.sleep;
+
 public class SplashScreenFragment extends Fragment {
 
     private FragmentInterface fragmentInterface;
-    private static int SCREEN_TIME = 3000;
-
 
     public SplashScreenFragment() {
         // Required empty public constructor
@@ -49,7 +51,6 @@ public class SplashScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash_screen, container, false);
     }
 
@@ -57,17 +58,24 @@ public class SplashScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        new Handler().postDelayed(new Runnable() {
+        CountDownTimer timer = new CountDownTimer(3000L, 1000L) {
             @Override
-            public void run() {
-
-                fragmentInterface.moveToScanningFragment();
+            public void onTick(long millisUntilFinished) {
+                //no-op
             }
-        }, SCREEN_TIME);
+            @Override
+            public void onFinish() {
+                finishSplash();
+            }
+        };
 
+        timer.start();
 
     }
 
+    private void finishSplash() {
+        fragmentInterface.finishSplashScreen(this);
+    }
 
 
     @Override
