@@ -1,7 +1,6 @@
 package com.pursuit.letskeepintouch.fragments;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,7 +27,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,12 +60,6 @@ public class ScanningFragment extends Fragment {
     private FragmentInterface fragmentInterface;
 
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     //private OnFragmentInteractionListener mListener;
 
     public ScanningFragment() {
@@ -77,17 +68,12 @@ public class ScanningFragment extends Fragment {
 
     public static ScanningFragment newInstance() {
         ScanningFragment fragment = new ScanningFragment();
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -107,7 +93,6 @@ public class ScanningFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         Toolbar toolbarBar = view.findViewById(R.id.toolbar_scan);
         toolbarBar.inflateMenu(R.menu.menu_scan);
         toolbarBar.setTitle(getResources().getString(R.string.click_button_to_add_image));
@@ -124,7 +109,7 @@ public class ScanningFragment extends Fragment {
         showImageImportDialog();
     }
 
-    private void getPermission(){
+    private void getPermission() {
         cameraPermission = new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -142,9 +127,8 @@ public class ScanningFragment extends Fragment {
         if (id == R.id.addImage) {
             showImageImportDialog();
         }
-        if (id == R.id.gallery) {
-            //take to display fragment
-            Toast.makeText(getContext(), "See Saved Text", Toast.LENGTH_SHORT).show();
+        if (id == R.id.contact) {
+            showContactImportDialog();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -158,30 +142,40 @@ public class ScanningFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                    //camera option clicked
                     if (!checkCameraPermission()) {
-                        //permission no allowed
                         requestCameraPermission();
                     } else {
-                        //permission allows
                         pickCamera();
                     }
                 }
                 if (which == 1) {
-                    //gallery option clicked
                     if (!checkStoragePermission()) {
-                        //permission no allowed
                         requestStoragePermission();
                     } else {
-                        //permission allows
                         pickStorage();
                     }
                 }
             }
         });
         dialog.create().show();
+    }
 
+    private void showContactImportDialog() {
+        String[] contactItems = {"GitHub", "LinkedIn"};
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setTitle(getResources().getString(R.string.select_contact));
 
+        dialog.setItems(contactItems, (dialog1, which) -> {
+            if (which == 0) {
+                //go to github
+                } else {
+                if (which == 1) {
+                    //go to linkedin
+
+                }
+            }
+        dialog.create().show();
+    });
     }
 
     private void pickStorage() {
@@ -263,14 +257,12 @@ public class ScanningFragment extends Fragment {
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(getActivity());
 
-
             }
             if (requestCode == IMAGE_PICK_CAMERA_CODE) {
                 //got image from camera, now crop it
                 CropImage.activity(imageUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(getActivity());
-
             }
 
         }
@@ -281,17 +273,14 @@ public class ScanningFragment extends Fragment {
                 Uri resultUri = result.getUri(); //get image uri, then set image to the view;
                 imageView.setImageURI(resultUri);
                 getTextFromCroppingImages();
-            }
-                 else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    Exception error = result.getError();
-                    Toast.makeText(getContext(), " " + error, Toast.LENGTH_SHORT).show();
-                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Toast.makeText(getContext(), " " + error, Toast.LENGTH_SHORT).show();
             }
         }
+    }
 
-
-
-    private void getTextFromCroppingImages(){
+    private void getTextFromCroppingImages() {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
         Bitmap bitmap = bitmapDrawable.getBitmap();
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getContext().getApplicationContext()).build();
@@ -315,12 +304,6 @@ public class ScanningFragment extends Fragment {
         }
     }
 
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
     private void addToDatabase() {
         TextDatabase databaseHelper = TextDatabase.getInstance(getContext());
         databaseHelper.addText();
@@ -331,12 +314,6 @@ public class ScanningFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        //mListener = null;
     }
 
-
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

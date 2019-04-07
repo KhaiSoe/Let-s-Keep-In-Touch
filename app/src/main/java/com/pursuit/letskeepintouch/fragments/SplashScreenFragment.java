@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 
 import com.pursuit.letskeepintouch.R;
 
-import static java.lang.Thread.sleep;
-
 public class SplashScreenFragment extends Fragment {
 
     private FragmentInterface fragmentInterface;
@@ -61,6 +59,7 @@ public class SplashScreenFragment extends Fragment {
             public void onTick(long millisUntilFinished) {
                 //no-op
             }
+
             @Override
             public void onFinish() {
                 finishSplashScreen();
