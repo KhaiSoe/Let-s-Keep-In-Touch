@@ -24,7 +24,7 @@
     <string name="setting_menu_scan">setting</string>
     <string name="picture">picture</string>
     <string name="linkedin">LinkedIn</string>
-    <string name="result">result</string>
+    <string name="result">Result Text</string>
     <string name="click_button_to_add_image">Click Button To Add Image</string>
     <string name="image_preview">Image Preview</string>
 
@@ -38,6 +38,7 @@
     <string name="pic_title_camera">New Pic</string>
     <string name="pic_descrption_camera">Image to Text</string>
     <string name="add_image">Add image</string>
+    <string name="save_text">Save</string>
 
 
 </resources>

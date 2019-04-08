@@ -27,6 +27,7 @@ public class SplashScreenFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +60,11 @@ public class SplashScreenFragment extends Fragment {
             public void onTick(long millisUntilFinished) {
                 //no-op
             }
-
             @Override
             public void onFinish() {
                 finishSplashScreen();
             }
         };
-
         timer.start();
 
     }
@@ -74,6 +73,11 @@ public class SplashScreenFragment extends Fragment {
         fragmentInterface.finishSplashScreen(this);
     }
 
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onDetach() {
