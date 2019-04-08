@@ -270,7 +270,8 @@ public class ScanningFragment extends Fragment {
         if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri(); //get image uri, then set image to the view;
+                Uri resultUri = result.getUri();
+                //get image uri, then set image to the view;
                 imageView.setImageURI(resultUri);
                 getTextFromCroppingImages();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -299,8 +300,8 @@ public class ScanningFragment extends Fragment {
 
             }
             //set text to editText
-            editText.setText(sb.toString());
             editText.append(sb.toString());
+            editText.setText(sb.toString());
         }
     }
 
