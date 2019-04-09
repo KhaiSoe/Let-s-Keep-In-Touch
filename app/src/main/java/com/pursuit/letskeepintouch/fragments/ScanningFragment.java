@@ -48,7 +48,7 @@ public class ScanningFragment extends Fragment {
     private EditText editText;
     private TextView resultTextView;
     private TextView imageTextView;
-    private CropImageView croppedImageView;
+    private ImageView croppedImageView;
     private Uri imageUri;
     public static final int CAMERA_REQUEST_CODE = 200;
     public static final int STORAGE_REQUEST_CODE = 400;
@@ -250,35 +250,14 @@ public class ScanningFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //got image from camera
-        if (resultCode == RESULT_OK) {
-            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
-                //got image from gallery, now crop it
-                CropImage.activity(data.getData())
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(getActivity());
-//                Log.e("KK", "get image from gallery" + imageUri.getPath());
-//
-
-            }
-            if (requestCode == IMAGE_PICK_CAMERA_CODE) {
-                //got image from camera, now crop it
-                CropImage.activity(imageUri)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(getActivity());
-                Log.e("KK", "get image from camera" + imageUri.getPath());
-            }
-        }
+        startCropImage(requestCode, resultCode, imageUri);
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            Log.e("FOR DATA", "onActivityResult: ", result.getError());
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-                //get image uri, then set image to the view;
-                croppedImageView.setImageUriAsync(resultUri);
-                Log.e("TAGGING FOR IMAGE","Image URI: "+imageUri.getPath());
-                //getTextFromCroppingImages();
+                imageUri = result.getUri();
+                croppedImageView.setImageURI(imageUri);
+                getTextFromCroppingImages();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Toast.makeText(getContext(), " " + error, Toast.LENGTH_SHORT).show();
@@ -286,31 +265,46 @@ public class ScanningFragment extends Fragment {
         }
     }
 
-//    private void getTextFromCroppingImages() {
-//        BitmapDrawable bitmapDrawable = (BitmapDrawable) croppedImageView.getCroppedImage();
-//        Bitmap bitmap = bitmapDrawable.getBitmap();
-//        TextRecognizer textRecognizer = new TextRecognizer.Builder(getContext().getApplicationContext()).build();
-//
-//        if (!textRecognizer.isOperational()) {
-//            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-//            SparseArray<TextBlock> items = textRecognizer.detect(frame);
-//            StringBuilder sb = new StringBuilder();
-//            //get text from sb until there is no text
-//            for (int i = 0; i < items.size(); i++) {
-//                TextBlock myItems = items.valueAt(i);
-//                sb.append(myItems.getValue());
-//                sb.append("/n");
-//
-//            }
-//            //set text to editText
-//            editText.append(sb.toString());
-//            editText.setText(sb.toString());
-//            Log.d("TAGGING FOR TEXT","crop text: "+editText);
-//
-//        }
-//    }
+    private void startCropImage(int requestCode, int resultCode, Uri imageUri) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
+                CropImage.activity(imageUri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(getContext(), this);
+
+            }
+            if (requestCode == IMAGE_PICK_CAMERA_CODE) {
+                CropImage.activity(imageUri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(getContext(), this);
+            }
+        }
+    }
+
+    private void getTextFromCroppingImages() {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) croppedImageView.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        TextRecognizer textRecognizer = new TextRecognizer.Builder(requireContext()).build();
+
+        if (!textRecognizer.isOperational()) {
+            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+        } else {
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray<TextBlock> items = textRecognizer.detect(frame);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < items.size(); i++) {
+                TextBlock myItems = items.valueAt(i);
+                sb.append(myItems.getValue());
+                sb.append("/n");
+
+            }
+            editText.append(sb.toString());
+            editText.setText(sb.toString());
+            Log.d("TAGGING FOR TEXT","crop text: "+sb.toString());
+
+        }
+    }
+
 
     private void addToDatabase() {
         TextDatabase databaseHelper = TextDatabase.getInstance(getContext());
