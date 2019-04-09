@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,7 +48,7 @@ public class ScanningFragment extends Fragment {
     private EditText editText;
     private TextView resultTextView;
     private TextView imageTextView;
-    private ImageView imageView;
+    private CropImageView croppedImageView;
     private Uri imageUri;
     public static final int CAMERA_REQUEST_CODE = 200;
     public static final int STORAGE_REQUEST_CODE = 400;
@@ -56,6 +57,7 @@ public class ScanningFragment extends Fragment {
 
     String cameraPermission[];
     String storagePermission[];
+    private Toolbar toolbarBar;
 
     private FragmentInterface fragmentInterface;
 
@@ -92,21 +94,18 @@ public class ScanningFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Toolbar toolbarBar = view.findViewById(R.id.toolbar_scan);
-        toolbarBar.inflateMenu(R.menu.menu_scan);
-        toolbarBar.setTitle(getResources().getString(R.string.click_button_to_add_image));
-
         setHasOptionsMenu(true);
 
         resultTextView = view.findViewById(R.id.show_result);
         editText = view.findViewById(R.id.scanned_result);
         imageTextView = view.findViewById(R.id.show_image);
-        imageView = view.findViewById(R.id.scanned_image);
+        croppedImageView = view.findViewById(R.id.scanned_image);
         //       getTextFromImage(view);
 
+        toolbarBar = view.findViewById(R.id.toolbar_scan);
+
         getPermission();
-        showImageImportDialog();
+
     }
 
     private void getPermission() {
@@ -125,35 +124,32 @@ public class ScanningFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.addImage) {
+
             showImageImportDialog();
-        }
-        if (id == R.id.contact) {
+        } else if (id == R.id.contact) {
             showContactImportDialog();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void showImageImportDialog() {
-        String[] items = {"Camera", "Gallery"};
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
         dialog.setTitle(getResources().getString(R.string.select_image));
 
-        dialog.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == 0) {
-                    if (!checkCameraPermission()) {
-                        requestCameraPermission();
-                    } else {
-                        pickCamera();
-                    }
+        String[] items = {"Camera", "Gallery"};
+        dialog.setItems(items, (DialogInterface dialog1, int which) -> {
+            if (which == 0) {
+                if (!checkCameraPermission()) {
+                    requestCameraPermission();
+                } else {
+                    pickCamera();
                 }
-                if (which == 1) {
-                    if (!checkStoragePermission()) {
-                        requestStoragePermission();
-                    } else {
-                        pickStorage();
-                    }
+            }
+            if (which == 1) {
+                if (!checkStoragePermission()) {
+                    requestStoragePermission();
+                } else {
+                    pickStorage();
                 }
             }
         });
@@ -162,20 +158,25 @@ public class ScanningFragment extends Fragment {
 
     private void showContactImportDialog() {
         String[] contactItems = {"GitHub", "LinkedIn"};
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setTitle(getResources().getString(R.string.select_contact));
+        AlertDialog.Builder contactDialog = new AlertDialog.Builder(getContext());
+        contactDialog.setTitle(getResources().getString(R.string.select_contact));
 
-        dialog.setItems(contactItems, (dialog1, which) -> {
+        contactDialog.setItems(contactItems, (DialogInterface dialog1, int which) -> {
             if (which == 0) {
-                //go to github
-                } else {
-                if (which == 1) {
-                    //go to linkedin
+                Uri gitUri = Uri.parse("https://github.com/KhaiSoe/CYOA_Pursuit_HW_SOE_KHAING");
+                Intent gitIntent = new Intent(Intent.ACTION_VIEW, gitUri);
+                startActivity(gitIntent);
 
+            } else {
+                if (which == 1) {
+                    Uri linkedinUri = Uri.parse("https://www.linkedin.com/in/khaing-m-soe/");
+                    Intent linkedinIntent = new Intent(Intent.ACTION_VIEW, linkedinUri);
+                    startActivity(linkedinIntent);
                 }
             }
-        dialog.create().show();
-    });
+        });
+        contactDialog.create().show();
+
     }
 
     private void pickStorage() {
@@ -256,6 +257,8 @@ public class ScanningFragment extends Fragment {
                 CropImage.activity(data.getData())
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(getActivity());
+//                Log.e("KK", "get image from gallery" + imageUri.getPath());
+//
 
             }
             if (requestCode == IMAGE_PICK_CAMERA_CODE) {
@@ -263,17 +266,19 @@ public class ScanningFragment extends Fragment {
                 CropImage.activity(imageUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(getActivity());
+                Log.e("KK", "get image from camera" + imageUri.getPath());
             }
-
         }
 
-        if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            Log.e("FOR DATA", "onActivityResult: ", result.getError());
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 //get image uri, then set image to the view;
-                imageView.setImageURI(resultUri);
-                getTextFromCroppingImages();
+                croppedImageView.setImageUriAsync(resultUri);
+                Log.e("TAGGING FOR IMAGE","Image URI: "+imageUri.getPath());
+                //getTextFromCroppingImages();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Toast.makeText(getContext(), " " + error, Toast.LENGTH_SHORT).show();
@@ -281,29 +286,31 @@ public class ScanningFragment extends Fragment {
         }
     }
 
-    private void getTextFromCroppingImages() {
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        TextRecognizer textRecognizer = new TextRecognizer.Builder(getContext().getApplicationContext()).build();
-
-        if (!textRecognizer.isOperational()) {
-            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-        } else {
-            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-            SparseArray<TextBlock> items = textRecognizer.detect(frame);
-            StringBuilder sb = new StringBuilder();
-            //get text from sb until there is no text
-            for (int i = 0; i < items.size(); i++) {
-                TextBlock myItems = items.valueAt(i);
-                sb.append(myItems.getValue());
-                sb.append("/n");
-
-            }
-            //set text to editText
-            editText.append(sb.toString());
-            editText.setText(sb.toString());
-        }
-    }
+//    private void getTextFromCroppingImages() {
+//        BitmapDrawable bitmapDrawable = (BitmapDrawable) croppedImageView.getCroppedImage();
+//        Bitmap bitmap = bitmapDrawable.getBitmap();
+//        TextRecognizer textRecognizer = new TextRecognizer.Builder(getContext().getApplicationContext()).build();
+//
+//        if (!textRecognizer.isOperational()) {
+//            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+//            SparseArray<TextBlock> items = textRecognizer.detect(frame);
+//            StringBuilder sb = new StringBuilder();
+//            //get text from sb until there is no text
+//            for (int i = 0; i < items.size(); i++) {
+//                TextBlock myItems = items.valueAt(i);
+//                sb.append(myItems.getValue());
+//                sb.append("/n");
+//
+//            }
+//            //set text to editText
+//            editText.append(sb.toString());
+//            editText.setText(sb.toString());
+//            Log.d("TAGGING FOR TEXT","crop text: "+editText);
+//
+//        }
+//    }
 
     private void addToDatabase() {
         TextDatabase databaseHelper = TextDatabase.getInstance(getContext());
