@@ -1,6 +1,9 @@
 package com.pursuit.letskeepintouch.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,16 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pursuit.letskeepintouch.R;
 public class DisplayFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private TextView textView;
+    private Toolbar toolbarBar;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -69,33 +80,55 @@ public class DisplayFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        Toolbar toolbarBar = view.findViewById(R.id.toolbar_scan);
+        setHasOptionsMenu(true);
+        recyclerView = view.findViewById(R.id.text_recyclerview);
+        toolbarBar = view.findViewById(R.id.toolbar_scan);
 //        toolbarBar.inflateMenu(R.menu.menu_display);
 //        toolbarBar.setTitle(getResources().getString(R.string.click_button_to_add_image));
 //
-//        setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //inflater.inflate(R.menu.menu_scan, menu);
+        inflater.inflate(R.menu.menu_edits, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.github_repo) {
-//            //go to github repo
-//            Toast.makeText(getContext(), "GitHub", Toast.LENGTH_SHORT).show();
-//
-//        }
-//        if (id == R.id.linkedin) {
-//            //go to linkedin
-//            Toast.makeText(getContext(), "LinkedIn", Toast.LENGTH_SHORT).show();
-//        }
+        int id = item.getItemId();
+        if (id == R.id.edit_text) {
+            //edit the text
+            Toast.makeText(getContext(), "GitHub", Toast.LENGTH_SHORT).show();
+
+        }
+        if (id == R.id.delete_text) {
+            //delete the text
+            Toast.makeText(getContext(), "LinkedIn", Toast.LENGTH_SHORT).show();
+       }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showEditTextDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setTitle(getResources().getString(R.string.select_image));
+
+        String[] editItems = {"Edit", "Delete"};
+        dialog.setItems(editItems, (DialogInterface dialog1, int which) -> {
+            if (which == 0) { //edit
+//                Uri gitUri = Uri.parse("https://github.com/KhaiSoe/CYOA_Pursuit_HW_SOE_KHAING");
+//                Intent gitIntent = new Intent(Intent.ACTION_VIEW, gitUri);
+//                startActivity(gitIntent);
+
+            } else {
+                if (which == 1) { //delete
+//                    Uri linkedinUri = Uri.parse("https://www.linkedin.com/in/khaing-m-soe/");
+//                    Intent linkedinIntent = new Intent(Intent.ACTION_VIEW, linkedinUri);
+//                    startActivity(linkedinIntent);
+                }
+            }
+        });
+        dialog.create().show();
     }
 
     @Override

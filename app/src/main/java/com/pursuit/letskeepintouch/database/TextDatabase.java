@@ -6,12 +6,18 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.pursuit.letskeepintouch.textdata.TextList;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class TextDatabase extends SQLiteOpenHelper {
 
     private static TextDatabase instance;
     private static final String DATABASE_NAME = "ScannedText.db";
     private static final String TABLE_NAME = "ScannedText";
     private static final int SCHEMA_VERSION = 1;
+    List<String> dataList;
 
     public TextDatabase(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
@@ -30,7 +36,7 @@ public class TextDatabase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(
                 "CREATE TABLE " + TABLE_NAME +
                         " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "date TEXT, scanned_text TEXT);");
+                        "cropped_text TEXT);");
     }
 
     @Override
@@ -39,35 +45,28 @@ public class TextDatabase extends SQLiteOpenHelper {
     }
 
 
-    public void addText () {
-//        Cursor cursor = getReadableDatabase().rawQuery(
-//                "SELECT * FROM " + TABLE_NAME + " WHERE date = '" + fellow.getFirstName() +
-//                        "' AND scanned_text = '" + fellow.getLastName() +
-//                        "';", null);
-//        if (cursor.getCount() == 0) {
-//            getWritableDatabase().execSQL("INSERT INTO " + TABLE_NAME +
-//                    "(date, scanned_text) VALUES('" +
-//                    fellow.getLastName() + "', '" +
-//                    fellow.getCompany() + "');");
-//        }
-//        cursor.close();
+    public void addText (String croppedText) {
+        getWritableDatabase().execSQL("INSERT INTO " + TABLE_NAME +
+                "(cropped_text) VALUES('" +
+                croppedText + "');");
     }
-//
-//    public List<Fellow> getFellowList() {
-//        List<Fellow> fellowList = new ArrayList<>();
-//        Cursor cursor = getReadableDatabase().rawQuery(
-//                "SELECT * FROM " + TABLE_NAME + ";", null);
-//        if(cursor != null) {
-//            if(cursor.moveToFirst()) {
-//                do {
-//                    Fellow fellow = new Fellow(
-//                            cursor.getString(cursor.getColumnIndex("last_name")),
-//                            cursor.getString(cursor.getColumnIndex("first_name")),
-//                            cursor.getString(cursor.getColumnIndex("company")));
-//                    fellowList.add(fellow);
-//                } while (cursor.moveToNext());
-//            }
-//        }
-//        return fellowList;
-//    }
+
+    public List<String> getTextList() {
+        List<String> textList = new ArrayList<>();
+        Cursor cursor = getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLE_NAME + ";", null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    String croppedText =
+                            cursor.getString(cursor.getColumnIndex("cropped_text"));
+
+                    textList.add(croppedText);
+                } while (cursor.moveToNext());
+            }
+        }
+        dataList = textList;
+        return textList;
+    }
 }

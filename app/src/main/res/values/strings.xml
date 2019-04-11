@@ -39,6 +39,10 @@
     <string name="pic_descrption_camera">Image to Text</string>
     <string name="add_image">Add image</string>
     <string name="save_text">Save</string>
+    <string name="pickStorage_intent">image/*</string>
+    <string name="delete_text">Delete Text</string>
+    <string name="add_text">Add Text</string>
+    <string name="next_fragment">Next</string>
 
 
 </resources>
