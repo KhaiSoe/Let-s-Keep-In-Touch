@@ -43,11 +43,18 @@
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content"
                            android:text="@string/result"
-                           android:background="#A1CAF1"
-                           android:textColor="#000000"
+                           android:background="#000000"
+                           android:textColor="#ffffff"
                            android:layout_gravity="center"
                            android:gravity="center"
                            android:textSize="20sp" />
+
+                       <androidx.cardview.widget.CardView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           app:cardCornerRadius="8dp"
+                           app:cardElevation="8dp"
+                           android:padding="5dp">
 
                        <EditText
                            android:id="@+id/scanned_result"
@@ -59,12 +66,15 @@
                            android:textColor="#000000"
                            android:textSize="18sp"
                            android:autofillHints="@string/click_button_to_add_image" />
+                       </androidx.cardview.widget.CardView>
                        <Button
+                           android:id="@+id/save_editText"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:layout_gravity="center"
-                           android:background="#89CFF0"
+                           android:background="#000000"
                            android:gravity="center"
+                           android:textColor="#ffffff"
                            android:text="@string/save_text"/>
                    </LinearLayout>
                </androidx.cardview.widget.CardView>
@@ -87,8 +97,8 @@
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content"
                            android:text="@string/image_preview"
-                           android:textColor="#000000"
-                           android:background="#A1CAF1"
+                           android:textColor="#ffffff"
+                           android:background="#000000"
                            android:layout_gravity="center"
                            android:gravity="center"
                            android:textSize="20sp" />

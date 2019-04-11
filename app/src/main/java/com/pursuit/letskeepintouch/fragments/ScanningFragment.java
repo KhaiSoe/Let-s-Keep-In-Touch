@@ -28,6 +28,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,20 +50,19 @@ public class ScanningFragment extends Fragment {
     private TextView resultTextView;
     private TextView imageTextView;
     private ImageView croppedImageView;
+    private String croppedTextString;
+    private Button saveButton;
     private Uri imageUri;
     public static final int CAMERA_REQUEST_CODE = 200;
     public static final int STORAGE_REQUEST_CODE = 400;
     public static final int IMAGE_PICK_GALLERY_CODE = 1000;
     public static final int IMAGE_PICK_CAMERA_CODE = 1001;
-
     String cameraPermission[];
     String storagePermission[];
     private Toolbar toolbarBar;
+    private TextDatabase textDatabase;
 
     private FragmentInterface fragmentInterface;
-
-
-    //private OnFragmentInteractionListener mListener;
 
     public ScanningFragment() {
         // Required empty public constructor
@@ -87,7 +87,6 @@ public class ScanningFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_scanning, container, false);
     }
 
@@ -100,11 +99,11 @@ public class ScanningFragment extends Fragment {
         editText = view.findViewById(R.id.scanned_result);
         imageTextView = view.findViewById(R.id.show_image);
         croppedImageView = view.findViewById(R.id.scanned_image);
-        //       getTextFromImage(view);
-
         toolbarBar = view.findViewById(R.id.toolbar_scan);
+        saveButton = view.findViewById(R.id.save_editText);
 
         getPermission();
+        addToDatabase();
 
     }
 
@@ -182,7 +181,7 @@ public class ScanningFragment extends Fragment {
     private void pickStorage() {
         //intent to pick image from gallery
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
+        intent.setType(getString(R.string.pickStorage_intent));
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
 
     }
@@ -295,21 +294,34 @@ public class ScanningFragment extends Fragment {
             for (int i = 0; i < items.size(); i++) {
                 TextBlock myItems = items.valueAt(i);
                 sb.append(myItems.getValue());
-                sb.append("/n");
+                //sb.append("/n");
 
             }
             editText.append(sb.toString());
             editText.setText(sb.toString());
-            Log.d("TAGGING FOR TEXT","crop text: "+sb.toString());
+            Log.d("TAGGING FOR TEXT", "crop text: " + sb.toString());
 
         }
+
     }
 
-
+    /**
+     * after cropping and text appears in editText, the toast flares up.
+     */
     private void addToDatabase() {
-        TextDatabase databaseHelper = TextDatabase.getInstance(getContext());
-        databaseHelper.addText();
-        fragmentInterface.moveToDisplayFragment();
+//        fragmentInterface.moveToDisplayFragment();
+
+        saveButton.setOnClickListener(v -> {
+            croppedTextString = editText.getText().toString();
+            Log.e("croppedText: ", croppedTextString);
+            if (croppedTextString.isEmpty()) {
+                Toast.makeText(getActivity(), "Please enter something...", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.e("TESTING: ", "to see editText");
+                TextDatabase databaseHelper = TextDatabase.getInstance(getContext());
+                databaseHelper.addText(croppedTextString);
+            }
+        });
 
     }
 
