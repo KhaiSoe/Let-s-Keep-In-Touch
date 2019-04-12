@@ -23,25 +23,23 @@ import com.pursuit.letskeepintouch.R;
 
 public class DetailFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
+    private static final String GET_TEXT_FROM_CLICK = "getText";
 
 
     private Toolbar toolbarBar;
     private TextView textView;
     private FragmentInterface fragmentInterface;
 
-    private String mParam1;
-
-
+    private String getText;
 
     public DetailFragment() {
         // Required empty public constructor
     }
 
-    public static DetailFragment newInstance(String chosenText) {
+    public static DetailFragment newInstance(String getText) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, chosenText);
+        args.putString(GET_TEXT_FROM_CLICK, getText);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +48,7 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            getText = getArguments().getString(GET_TEXT_FROM_CLICK);
         }
     }
 
@@ -75,7 +73,7 @@ public class DetailFragment extends Fragment {
 
         toolbarBar = view.findViewById(R.id.toolbar_scan);
         textView = view.findViewById(R.id.chosen_textView);
-        textView.setText(getArguments().getString(ARG_PARAM1));
+        textView.setText(getArguments().getString(GET_TEXT_FROM_CLICK));
 
 
 

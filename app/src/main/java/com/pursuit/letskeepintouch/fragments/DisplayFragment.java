@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.pursuit.letskeepintouch.database.TextDatabase;
 import com.pursuit.letskeepintouch.recyclerview.TextAdapter;
 import com.pursuit.letskeepintouch.recyclerview.TextViewHolder;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DisplayFragment extends Fragment {
@@ -70,40 +72,22 @@ public class DisplayFragment extends Fragment {
         textView = view.findViewById(R.id.cropped_textView);
         recyclerView = view.findViewById(R.id.text_recyclerview);
         settingRecyclerView(view);
-
-        fragmentInterface.moveToDetailFragment(textView.getText().toString());
-
+        moveToNextFragment();
     }
 
-    private void settingRecyclerView(View view){
+    private void settingRecyclerView(View view) {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         List<String> textLists = TextDatabase.getTextList();
         TextAdapter textAdapter = new TextAdapter(textLists);
         recyclerView.setAdapter(textAdapter);
 
 
-
     }
 
+    private void moveToNextFragment(){
+        fragmentInterface.moveToDetailFragment("Something");
 
-//    public void onSwipe(){
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                removeItem(viewHolder.itemView.getTag());
-//            }
-//        }).attachToRecyclerView(recyclerView);
-//    }
-//
-//    private void removeItem() {
-//        database.delete();
-//    }
-
+    }
 
     @Override
     public void onDetach() {
