@@ -314,11 +314,9 @@ public class ScanningFragment extends Fragment {
             if (croppedTextString.isEmpty()) {
                 Toast.makeText(getActivity(), "Please enter something...", Toast.LENGTH_SHORT).show();
             } else {
-                TextDatabase databaseHelper = TextDatabase.getInstance();
-                databaseHelper.addText(croppedTextString);
+                TextDatabase.getInstance().addText(croppedTextString);
                 Log.e("TESTING: ", croppedTextString);
                fragmentInterface.moveToDisplayFragment();
-
             }
         });
 
