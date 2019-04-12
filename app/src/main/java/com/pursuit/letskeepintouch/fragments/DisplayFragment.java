@@ -79,7 +79,6 @@ public class DisplayFragment extends Fragment {
         List<String> textLists = TextDatabase.getTextList();
         TextAdapter textAdapter = new TextAdapter(textLists, fragmentInterface);
         recyclerView.setAdapter(textAdapter);
-
     }
 
     @Override

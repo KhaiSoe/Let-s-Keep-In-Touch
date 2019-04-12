@@ -43,6 +43,8 @@
     <string name="delete_text">Delete Text</string>
     <string name="add_text">Add Text</string>
     <string name="next_fragment">Next</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
 
 
 </resources>

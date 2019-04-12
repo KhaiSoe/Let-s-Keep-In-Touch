@@ -56,9 +56,6 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields{
 
         TextDatabase td = getInstance();
         td.getWritableDatabase().execSQL(insertString);
-//        getWritableDatabase().execSQL("INSERT INTO " + TABLE_NAME +
-//              "  ("+CROPPED_COLUMN_NAME+") VALUES('" +
-//                croppedText + "');");
         getTextList();
     }
 
@@ -93,6 +90,4 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields{
         return textList;
     }
 
-    public void delete(String tableName, String s) {
-    }
 }
