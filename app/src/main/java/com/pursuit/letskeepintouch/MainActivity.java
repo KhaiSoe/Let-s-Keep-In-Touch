@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
     }
 
     @Override
-    public void moveToDetailFragment(String chosenText) {
+    public void moveToDetailFragment(String getText) {
 
-        DetailFragment detailFragment = DetailFragment.newInstance(chosenText);
+        DetailFragment detailFragment = DetailFragment.newInstance(getText);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, detailFragment)
