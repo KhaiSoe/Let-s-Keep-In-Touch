@@ -16,19 +16,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.pursuit.letskeepintouch.R;
+import com.pursuit.letskeepintouch.database.TextDatabase;
 
 public class DetailFragment extends Fragment {
 
     private static final String GET_TEXT_FROM_CLICK = "getText";
 
 
-    private Toolbar toolbarBar;
     private EditText editText;
+    private Button saveButton;
+    private Button deleteButton;
     private FragmentInterface fragmentInterface;
 
     private String getText;
@@ -72,65 +75,35 @@ public class DetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        toolbarBar = view.findViewById(R.id.toolbar_scan);
         editText = view.findViewById(R.id.chosen_textView);
+        saveButton = view.findViewById(R.id.save_editText);
+        deleteButton = view.findViewById(R.id.delete_text);
+
         editText.setText(getArguments().getString(GET_TEXT_FROM_CLICK));
 
+        editingItem();
 
-
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_edits, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.edit_text) {
-            editingItem();
-        }
-        if (id == R.id.delete_text) {
-            deleteItem();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    private void showEditTextDialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setTitle(getResources().getString(R.string.select_image));
-
-        String[] editItems = {"Edit", "Delete"};
-        dialog.setItems(editItems, (DialogInterface dialog1, int which) -> {
-            if (which == 0) { //edit
-                editingItem();
-            } else {
-                if (which == 1) { //delete
-                    deleteItem();
-                }
-            }
-        });
-        dialog.create().show();
     }
 
     private void editingItem(){
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                removeItem((long)viewHolder.itemView.getTag());
-//            }
-//        }).attachToRecyclerView(recyclerView);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String newText = editText.getText().toString();
+                TextDatabase.getInstance().addText(newText);
+            }
+        });
     }
 
+
     private void deleteItem() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String newText = editText.getText().toString();
+
+            }
+        });
     }
 
 }

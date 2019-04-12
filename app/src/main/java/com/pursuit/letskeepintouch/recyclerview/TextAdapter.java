@@ -32,7 +32,6 @@ public class TextAdapter extends RecyclerView.Adapter<TextViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TextViewHolder holder, int position) {
         holder.onBind(textList.get(position), fragmentInterface);
-
     }
 
     @Override
