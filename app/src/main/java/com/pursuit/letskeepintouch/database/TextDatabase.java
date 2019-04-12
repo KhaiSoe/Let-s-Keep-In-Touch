@@ -56,9 +56,17 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields{
 
         TextDatabase td = getInstance();
         td.getWritableDatabase().execSQL(insertString);
-        getTextList();
     }
 
+    public void deleteText (String croppedText) {
+        String deleteString = "DELETE FROM " + TABLE_NAME + " WHERE " + CROPPED_COLUMN_NAME+ " = '" +  croppedText + "'";
+
+        TextDatabase td = getInstance();
+        td.getWritableDatabase().execSQL(deleteString);
+        Log.i("deleting: ", deleteString);
+
+        getTextList();
+    }
 
     public static List<String> getTextList() {
         List<String> textList = new ArrayList<>();
@@ -77,15 +85,11 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields{
                     String croppedText =
                             cursor.getString(cursor.getColumnIndex(CROPPED_COLUMN_NAME));
 
-                    Log.i("cropped text?", croppedText);
-
                     textList.add(croppedText);
                 } while (cursor.moveToNext());
             }
         } else {
-
             Log.e("null?", "No cursor");
-
         }
         return textList;
     }

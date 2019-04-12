@@ -82,7 +82,7 @@ public class DetailFragment extends Fragment {
         editText.setText(getArguments().getString(GET_TEXT_FROM_CLICK));
 
         editingItem();
-
+        deleteItem();
     }
 
     private void editingItem(){
@@ -95,13 +95,12 @@ public class DetailFragment extends Fragment {
         });
     }
 
-
     private void deleteItem() {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String newText = editText.getText().toString();
-
+                final String thisText = editText.getText().toString();
+                TextDatabase.getInstance().deleteText(thisText);
             }
         });
     }
