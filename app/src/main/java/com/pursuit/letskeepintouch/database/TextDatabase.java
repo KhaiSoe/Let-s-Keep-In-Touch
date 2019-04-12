@@ -93,6 +93,6 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields{
         return textList;
     }
 
-    public void delete(String tableName, String s, Object o) {
+    public void delete(String tableName, String s) {
     }
 }

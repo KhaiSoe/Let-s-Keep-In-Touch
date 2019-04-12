@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.pursuit.letskeepintouch.database.TextDatabase;
+import com.pursuit.letskeepintouch.fragments.DetailFragment;
 import com.pursuit.letskeepintouch.fragments.DisplayFragment;
 import com.pursuit.letskeepintouch.fragments.FragmentInterface;
 import com.pursuit.letskeepintouch.fragments.ScanningFragment;
@@ -45,8 +46,7 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
     @Override
     public void moveToDisplayFragment() {
 
-
-        DisplayFragment displayFragment = DisplayFragment.newInstance("a", "b");
+        DisplayFragment displayFragment = DisplayFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, displayFragment)
@@ -55,10 +55,20 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
     }
 
     @Override
+    public void moveToDetailFragment(String chosenText) {
+
+        DetailFragment detailFragment = DetailFragment.newInstance(chosenText);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, detailFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
     public void finishSplashScreen(Fragment fragment) {
         closeFragment(fragment);
         moveToScanningFragment();
-       // moveToDisplayFragment();
     }
 
     @Override
