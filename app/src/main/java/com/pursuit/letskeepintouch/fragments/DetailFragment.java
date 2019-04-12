@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -27,7 +28,7 @@ public class DetailFragment extends Fragment {
 
 
     private Toolbar toolbarBar;
-    private TextView textView;
+    private EditText editText;
     private FragmentInterface fragmentInterface;
 
     private String getText;
@@ -72,8 +73,8 @@ public class DetailFragment extends Fragment {
         setHasOptionsMenu(true);
 
         toolbarBar = view.findViewById(R.id.toolbar_scan);
-        textView = view.findViewById(R.id.chosen_textView);
-        textView.setText(getArguments().getString(GET_TEXT_FROM_CLICK));
+        editText = view.findViewById(R.id.chosen_textView);
+        editText.setText(getArguments().getString(GET_TEXT_FROM_CLICK));
 
 
 

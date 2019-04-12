@@ -72,20 +72,13 @@ public class DisplayFragment extends Fragment {
         textView = view.findViewById(R.id.cropped_textView);
         recyclerView = view.findViewById(R.id.text_recyclerview);
         settingRecyclerView(view);
-        moveToNextFragment();
     }
 
     private void settingRecyclerView(View view) {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         List<String> textLists = TextDatabase.getTextList();
-        TextAdapter textAdapter = new TextAdapter(textLists);
+        TextAdapter textAdapter = new TextAdapter(textLists, fragmentInterface);
         recyclerView.setAdapter(textAdapter);
-
-
-    }
-
-    private void moveToNextFragment(){
-        fragmentInterface.moveToDetailFragment("Something");
 
     }
 
