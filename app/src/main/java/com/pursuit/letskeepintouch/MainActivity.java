@@ -3,8 +3,10 @@ package com.pursuit.letskeepintouch;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import com.pursuit.letskeepintouch.database.TextDatabase;
 import com.pursuit.letskeepintouch.fragments.DisplayFragment;
 import com.pursuit.letskeepintouch.fragments.FragmentInterface;
 import com.pursuit.letskeepintouch.fragments.ScanningFragment;
@@ -16,8 +18,10 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         showSplashScreen();
+
+        Context context = getApplicationContext();
+        TextDatabase.createInstance(context);
     }
 
     public void showSplashScreen() {
@@ -40,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
 
     @Override
     public void moveToDisplayFragment() {
+
+
         DisplayFragment displayFragment = DisplayFragment.newInstance("a", "b");
         getSupportFragmentManager()
                 .beginTransaction()
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
     public void finishSplashScreen(Fragment fragment) {
         closeFragment(fragment);
         moveToScanningFragment();
+       // moveToDisplayFragment();
     }
 
     @Override

@@ -2,41 +2,46 @@ package com.pursuit.letskeepintouch.database;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-import com.pursuit.letskeepintouch.textdata.TextList;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextDatabase extends SQLiteOpenHelper {
+public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields{
 
     private static TextDatabase instance;
-    private static final String DATABASE_NAME = "ScannedText.db";
-    private static final String TABLE_NAME = "ScannedText";
+
     private static final int SCHEMA_VERSION = 1;
-    List<String> dataList;
+
 
     public TextDatabase(Context context) {
+
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
+        Log.i("Created a DB", "DB");
     }
 
-    public static synchronized TextDatabase getInstance(Context context){
-        if(instance == null){
-            instance = new TextDatabase(context);
-        }
+    public static void createInstance(Context context){
+        instance=new TextDatabase(context);
+
+    }
+
+    public static TextDatabase getInstance(){
+      //  if(instance == null){
+      //      instance = new TextDatabase(context);
+      //  }
         return instance;
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(
-                "CREATE TABLE " + TABLE_NAME +
-                        " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cropped_text TEXT);");
+        final String createString = "CREATE TABLE " + TABLE_NAME + " (" + ID_COLUMN_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, " +  CROPPED_COLUMN_NAME + " TEXT NOT NULL );";
+      sqLiteDatabase.execSQL(createString);
+
     }
 
     @Override
@@ -46,27 +51,48 @@ public class TextDatabase extends SQLiteOpenHelper {
 
 
     public void addText (String croppedText) {
-        getWritableDatabase().execSQL("INSERT INTO " + TABLE_NAME +
-                "(cropped_text) VALUES('" +
-                croppedText + "');");
+        String insertString = "INSERT INTO " + TABLE_NAME +"  ("+CROPPED_COLUMN_NAME+") VALUES('" +  croppedText +" ');";
+        Log.i("Inserting: ", insertString);
+
+        TextDatabase td = getInstance();
+        td.getWritableDatabase().execSQL(insertString);
+//        getWritableDatabase().execSQL("INSERT INTO " + TABLE_NAME +
+//              "  ("+CROPPED_COLUMN_NAME+") VALUES('" +
+//                croppedText + "');");
+        getTextList();
     }
 
-    public List<String> getTextList() {
+
+    public static List<String> getTextList() {
         List<String> textList = new ArrayList<>();
-        Cursor cursor = getReadableDatabase().rawQuery(
+
+        Cursor cursor = getInstance().getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLE_NAME + ";", null);
 
         if (cursor != null) {
+
+            int rowCount=cursor.getCount();
+
+            Log.i("getting Row Count: ", Integer.toString(rowCount));
+
             if (cursor.moveToFirst()) {
                 do {
                     String croppedText =
-                            cursor.getString(cursor.getColumnIndex("cropped_text"));
+                            cursor.getString(cursor.getColumnIndex(CROPPED_COLUMN_NAME));
+
+                    Log.i("cropped text?", croppedText);
 
                     textList.add(croppedText);
                 } while (cursor.moveToNext());
             }
+        } else {
+
+            Log.e("null?", "No cursor");
+
         }
-        dataList = textList;
         return textList;
+    }
+
+    public void delete(String tableName, String s, Object o) {
     }
 }

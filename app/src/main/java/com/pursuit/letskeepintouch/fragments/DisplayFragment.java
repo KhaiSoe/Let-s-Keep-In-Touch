@@ -3,14 +3,14 @@ package com.pursuit.letskeepintouch.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -23,22 +23,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pursuit.letskeepintouch.R;
+import com.pursuit.letskeepintouch.database.TextDatabase;
+import com.pursuit.letskeepintouch.recyclerview.TextAdapter;
+
+import java.util.List;
+
 public class DisplayFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private TextView textView;
     private Toolbar toolbarBar;
+    private TextAdapter textAdapter;
+    private TextDatabase database;
+    private SharedPreferences sharedPreferences;
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
+    private String seeCroppedText;
     private String mParam2;
 
-//    private OnFragmentInteractionListener mListener;
 
     public DisplayFragment() {
-        // Required empty public constructor
     }
 
     public static DisplayFragment newInstance(String param1, String param2) {
@@ -54,7 +61,7 @@ public class DisplayFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            seeCroppedText = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -62,18 +69,11 @@ public class DisplayFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_display, container, false);
     }
 
@@ -81,11 +81,22 @@ public class DisplayFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
-        recyclerView = view.findViewById(R.id.text_recyclerview);
+
+        textView = view.findViewById(R.id.cropped_textView);
         toolbarBar = view.findViewById(R.id.toolbar_scan);
-//        toolbarBar.inflateMenu(R.menu.menu_display);
-//        toolbarBar.setTitle(getResources().getString(R.string.click_button_to_add_image));
-//
+
+//        sharedPreferences.getString(ScanningFragment.EDITTEXT_SHARED_PREFS, )
+//        seeCroppedText = getString()
+        recyclerView = view.findViewById(R.id.text_recyclerview);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        List<String> textLists = TextDatabase.getTextList();
+
+        TextAdapter textAdapter = new TextAdapter(textLists);
+
+        recyclerView.setAdapter(textAdapter);
+
     }
 
     @Override
@@ -131,22 +142,25 @@ public class DisplayFragment extends Fragment {
         dialog.create().show();
     }
 
+    private void editingItem(){
+//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//                removeItem((long)viewHolder.itemView.getTag());
+//            }
+//        }).attachToRecyclerView(recyclerView);
+    }
+
+
     @Override
     public void onDetach() {
         super.onDetach();
 //        mListener = null;
     }
-//
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
-
-
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
 
 }
