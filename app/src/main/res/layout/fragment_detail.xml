@@ -6,7 +6,7 @@
     tools:context=".fragments.DetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <EditText
         android:id="@+id/chosen_textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

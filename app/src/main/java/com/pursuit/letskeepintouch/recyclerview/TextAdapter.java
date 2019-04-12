@@ -7,6 +7,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.pursuit.letskeepintouch.R;
+import com.pursuit.letskeepintouch.fragments.FragmentInterface;
 
 import java.util.List;
 
@@ -15,9 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TextAdapter extends RecyclerView.Adapter<TextViewHolder> {
     private List<String> textList;
+    private FragmentInterface fragmentInterface;
 
-    public TextAdapter(List<String> textLists) {
+    public TextAdapter(List<String> textLists, FragmentInterface fragmentInterface) {
         this.textList = textLists;
+        this.fragmentInterface = fragmentInterface;
     }
 
     @NonNull
@@ -28,7 +31,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TextViewHolder holder, int position) {
-        holder.onBind(textList.get(position));
+        holder.onBind(textList.get(position), fragmentInterface);
 
     }
 
