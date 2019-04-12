@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -55,9 +54,6 @@ public class ScanningFragment extends Fragment {
     private Button saveButton;
     private Button nextButton;
     private Uri imageUri;
-    private SharedPreferences sharedPreferences;
-    public static final String SCANNING_FRAG_SHARED_PREFS= "ScanningFragment";
-    public static final String EDITTEXT_SHARED_PREFS = "editText";
     public static final int CAMERA_REQUEST_CODE = 200;
     public static final int STORAGE_REQUEST_CODE = 400;
     public static final int IMAGE_PICK_GALLERY_CODE = 1000;
@@ -65,7 +61,6 @@ public class ScanningFragment extends Fragment {
     String cameraPermission[];
     String storagePermission[];
     private Toolbar toolbarBar;
-    private TextDatabase textDatabase;
     private FragmentInterface fragmentInterface;
 
 
@@ -86,8 +81,11 @@ public class ScanningFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        fragmentInterface = (FragmentInterface) context;
-    }
+        if(context instanceof FragmentInterface){
+            fragmentInterface = (FragmentInterface) context;
+        } else {
+            throw new RuntimeException(context.toString() + "must implement FragmentInterface");
+        }    }
 
 
     @Override
@@ -101,11 +99,6 @@ public class ScanningFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-//        if (getContext() != null) {
-//            sharedPreferences = getActivity().getSharedPreferences(
-//                    SCANNING_FRAG_SHARED_PREFS, Context.MODE_PRIVATE);
-//        }
-
         resultTextView = view.findViewById(R.id.show_result);
         editText = view.findViewById(R.id.scanned_result);
         imageTextView = view.findViewById(R.id.show_image);
@@ -116,8 +109,7 @@ public class ScanningFragment extends Fragment {
 
         getPermission();
         addToDatabase();
-        //toNextFragment();
-
+        toNextFragment();
     }
 
     private void getPermission() {
@@ -310,11 +302,6 @@ public class ScanningFragment extends Fragment {
             }
             editText.append(sb.toString());
             editText.setText(sb.toString());
-
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.putString(EDITTEXT_SHARED_PREFS, editText.getText().toString());
-//            editor.apply();
-
         }
 
     }
@@ -323,7 +310,6 @@ public class ScanningFragment extends Fragment {
 
         saveButton.setOnClickListener(v -> {
             croppedTextString = editText.getText().toString();
-//            croppedTextString = sharedPreferences.getString(EDITTEXT_SHARED_PREFS, editText.getText().toString());
             Log.e("croppedText: ", croppedTextString);
             if (croppedTextString.isEmpty()) {
                 Toast.makeText(getActivity(), "Please enter something...", Toast.LENGTH_SHORT).show();
@@ -339,17 +325,13 @@ public class ScanningFragment extends Fragment {
     }
 
     private void toNextFragment(){
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentInterface.moveToDisplayFragment();
-            }
-        });
+        nextButton.setOnClickListener(v -> fragmentInterface.moveToDisplayFragment());
     }
 
 
     @Override
     public void onDetach() {
+        fragmentInterface = null;
         super.onDetach();
     }
 

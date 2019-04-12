@@ -8,6 +8,8 @@ public interface FragmentInterface {
 
     void moveToDisplayFragment();
 
+    void moveToDetailFragment(String chosenText);
+
     void finishSplashScreen(Fragment fragment);
 
     void closeFragment(Fragment fragment);

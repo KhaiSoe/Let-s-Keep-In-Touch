@@ -1,6 +1,7 @@
 package com.pursuit.letskeepintouch.recyclerview;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.pursuit.letskeepintouch.R;
@@ -26,6 +27,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TextViewHolder holder, int position) {
         holder.onBind(textList.get(position));
+
     }
 
     @Override
@@ -36,8 +38,9 @@ public class TextAdapter extends RecyclerView.Adapter<TextViewHolder> {
 
     public void setData(List<String> newTextLists) {
         this.textList = newTextLists;
-            notifyDataSetChanged();
-        }
-}
+        notifyDataSetChanged();
+    }
 
+
+}
 
