@@ -5,34 +5,26 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pursuit.letskeepintouch.R;
-import com.pursuit.letskeepintouch.database.DatabaseFields;
 import com.pursuit.letskeepintouch.database.TextDatabase;
 import com.pursuit.letskeepintouch.recyclerview.TextAdapter;
-import com.pursuit.letskeepintouch.recyclerview.TextViewHolder;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class DisplayFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private TextView textView;
-    private Toolbar toolbarBar;
     private TextAdapter textAdapter;
-    private TextDatabase database;
     private FragmentInterface fragmentInterface;
 
 
@@ -52,7 +44,7 @@ public class DisplayFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof FragmentInterface){
+        if (context instanceof FragmentInterface) {
             fragmentInterface = (FragmentInterface) context;
         } else {
             throw new RuntimeException(context.toString() + "must implement FragmentInterface");
@@ -77,7 +69,7 @@ public class DisplayFragment extends Fragment {
     private void settingRecyclerView(View view) {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         List<String> textLists = TextDatabase.getTextList();
-        TextAdapter textAdapter = new TextAdapter(textLists, fragmentInterface);
+        textAdapter = new TextAdapter(textLists, fragmentInterface);
         recyclerView.setAdapter(textAdapter);
     }
 

@@ -19,15 +19,13 @@ public class TextViewHolder extends RecyclerView.ViewHolder {
         textView = itemView.findViewById(R.id.cropped_textView);
 
     }
+
     public void onBind(String textList, FragmentInterface fragmentInterface) {
         textView.setText(textList);
         this.fragmentInterface = fragmentInterface;
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("You clicked", getAdapterPosition() + textList);
-                fragmentInterface.moveToDetailFragment(textList);
-            }
+        itemView.setOnClickListener(v -> {
+            Log.e("You clicked", getAdapterPosition() + textList);
+            fragmentInterface.moveToDetailFragment(textList);
         });
     }
 
