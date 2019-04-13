@@ -55,7 +55,7 @@ public class SplashScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CountDownTimer timer = new CountDownTimer(3000L, 1000L) {
+        CountDownTimer timer = new CountDownTimer(2000L, 1000L) {
             @Override
             public void onTick(long millisUntilFinished) {
                 //no-op
