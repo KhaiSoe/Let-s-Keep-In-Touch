@@ -3,7 +3,6 @@ package com.pursuit.letskeepintouch.fragments;
 import androidx.fragment.app.Fragment;
 
 public interface FragmentInterface {
-    //void showSplashScreen();
     void moveToScanningFragment();
 
     void moveToDisplayFragment();

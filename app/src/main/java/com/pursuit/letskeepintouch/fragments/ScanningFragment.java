@@ -65,7 +65,6 @@ public class ScanningFragment extends Fragment {
 
 
     public ScanningFragment() {
-        // Required empty public constructor
     }
 
     public static ScanningFragment newInstance() {
@@ -184,7 +183,6 @@ public class ScanningFragment extends Fragment {
     }
 
     private void pickStorage() {
-        //intent to pick image from gallery
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(getString(R.string.pickStorage_intent));
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);

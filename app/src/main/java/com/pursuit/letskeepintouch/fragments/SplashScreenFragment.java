@@ -19,7 +19,6 @@ public class SplashScreenFragment extends Fragment {
     private FragmentInterface fragmentInterface;
 
     public SplashScreenFragment() {
-        // Required empty public constructor
     }
 
     public static SplashScreenFragment newInstance() {
@@ -58,8 +57,8 @@ public class SplashScreenFragment extends Fragment {
         CountDownTimer timer = new CountDownTimer(2000L, 1000L) {
             @Override
             public void onTick(long millisUntilFinished) {
-                //no-op
             }
+
             @Override
             public void onFinish() {
                 finishSplashScreen();

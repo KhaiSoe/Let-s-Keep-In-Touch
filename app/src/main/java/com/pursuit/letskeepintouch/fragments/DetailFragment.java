@@ -1,9 +1,7 @@
 package com.pursuit.letskeepintouch.fragments;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,15 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.pursuit.letskeepintouch.R;
 import com.pursuit.letskeepintouch.database.TextDatabase;
@@ -37,7 +30,6 @@ public class DetailFragment extends Fragment {
     private String getText;
 
     public DetailFragment() {
-        // Required empty public constructor
     }
 
     public static DetailFragment newInstance(String getText) {
@@ -85,23 +77,19 @@ public class DetailFragment extends Fragment {
         deleteItem();
     }
 
-    private void editingItem(){
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String newText = editText.getText().toString();
-                TextDatabase.getInstance().addText(newText);
-            }
+    private void editingItem() {
+        saveButton.setOnClickListener(v -> {
+            final String newText = editText.getText().toString();
+            TextDatabase.getInstance().addText(newText);
+            fragmentInterface.moveToDisplayFragment();
         });
     }
 
     private void deleteItem() {
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String thisText = editText.getText().toString();
-                TextDatabase.getInstance().deleteText(thisText);
-            }
+        deleteButton.setOnClickListener(v -> {
+            final String thisText = editText.getText().toString();
+            TextDatabase.getInstance().deleteText(thisText);
+            fragmentInterface.moveToDisplayFragment();
         });
     }
 
