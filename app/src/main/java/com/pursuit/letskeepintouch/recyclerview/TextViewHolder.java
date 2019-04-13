@@ -24,7 +24,6 @@ public class TextViewHolder extends RecyclerView.ViewHolder {
         textView.setText(textList);
         this.fragmentInterface = fragmentInterface;
         itemView.setOnClickListener(v -> {
-            Log.e("You clicked", getAdapterPosition() + textList);
             fragmentInterface.moveToDetailFragment(textList);
         });
     }

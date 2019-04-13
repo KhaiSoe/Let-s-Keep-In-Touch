@@ -308,12 +308,10 @@ public class ScanningFragment extends Fragment {
 
         saveButton.setOnClickListener(v -> {
             croppedTextString = editText.getText().toString();
-            Log.e("croppedText: ", croppedTextString);
             if (croppedTextString.isEmpty()) {
                 Toast.makeText(getActivity(), "Please enter something...", Toast.LENGTH_SHORT).show();
             } else {
                 TextDatabase.getInstance().addText(croppedTextString);
-                Log.e("TESTING: ", croppedTextString);
                fragmentInterface.moveToDisplayFragment();
             }
         });

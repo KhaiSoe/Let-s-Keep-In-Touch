@@ -19,7 +19,6 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields {
 
     public TextDatabase(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
-        Log.i("Created a DB", "DB");
     }
 
     public static void createInstance(Context context) {
@@ -44,7 +43,6 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields {
 
     public void addText(String croppedText) {
         String insertString = "INSERT INTO " + TABLE_NAME + "  (" + CROPPED_COLUMN_NAME + ") VALUES('" + croppedText + " ');";
-        Log.i("Inserting: ", insertString);
 
         TextDatabase td = getInstance();
         td.getWritableDatabase().execSQL(insertString);
@@ -55,9 +53,7 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields {
 
         TextDatabase td = getInstance();
         td.getWritableDatabase().execSQL(deleteString);
-        Log.i("deleting: ", deleteString);
 
-        getTextList();
     }
 
     public static List<String> getTextList() {
@@ -69,8 +65,6 @@ public class TextDatabase extends SQLiteOpenHelper implements DatabaseFields {
         if (cursor != null) {
 
             int rowCount = cursor.getCount();
-
-            Log.i("getting Row Count: ", Integer.toString(rowCount));
 
             if (cursor.moveToFirst()) {
                 do {

@@ -65,7 +65,6 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true);
 
         editText = view.findViewById(R.id.chosen_textView);
         saveButton = view.findViewById(R.id.save_editText);
