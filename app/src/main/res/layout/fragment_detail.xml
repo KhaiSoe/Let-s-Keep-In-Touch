@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".fragments.DetailFragment">
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,8 +15,7 @@
         android:padding="5dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
-
-
+        
         <EditText
             android:id="@+id/chosen_textView"
             android:layout_width="match_parent"
@@ -34,12 +32,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/save_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:padding="5dp"
+            style="@style/detail_card_buttons"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,25 +41,14 @@
 
             <Button
                 android:id="@+id/save_editText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#000000"
-                android:gravity="center"
-                android:text="@string/save"
-                android:textAlignment="center"
-                android:textColor="#ffffff" />
+                style="@style/detail_buttons_style"
+                android:text="@string/save" />
         </androidx.cardview.widget.CardView>
 
 
         <androidx.cardview.widget.CardView
             android:id="@+id/delete_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:padding="5dp"
+            style="@style/detail_card_buttons"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -76,24 +58,14 @@
 
             <Button
                 android:id="@+id/delete_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#000000"
-                android:gravity="center"
-                android:text="@string/delete"
-                android:textAlignment="center"
-                android:textColor="#ffffff" />
+                style="@style/detail_buttons_style"
+                android:text="@string/delete" />
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/exit_card"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:padding="5dp"
+            style="@style/detail_card_buttons"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -103,17 +75,11 @@
 
             <Button
                 android:id="@+id/exit_app"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#000000"
-                android:gravity="center"
-                android:text="@string/exit_app"
-                android:textAlignment="center"
-                android:textColor="#ffffff" />
+                style="@style/detail_buttons_style"
+                android:text="@string/exit_app" />
+
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>
