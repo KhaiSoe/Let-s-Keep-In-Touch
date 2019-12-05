@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements FragmentInterface
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, scanningFragment)
-                .addToBackStack(null)
                 .commit();
     }
 

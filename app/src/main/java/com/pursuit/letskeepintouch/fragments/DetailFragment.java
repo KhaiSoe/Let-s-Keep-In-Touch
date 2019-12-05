@@ -25,6 +25,7 @@ public class DetailFragment extends Fragment {
     private EditText editText;
     private Button saveButton;
     private Button deleteButton;
+    private Button exitButton;
     private FragmentInterface fragmentInterface;
 
     private String getText;
@@ -69,11 +70,13 @@ public class DetailFragment extends Fragment {
         editText = view.findViewById(R.id.chosen_textView);
         saveButton = view.findViewById(R.id.save_editText);
         deleteButton = view.findViewById(R.id.delete_text);
+        exitButton = view.findViewById(R.id.exit_app);
 
         editText.setText(getArguments().getString(GET_TEXT_FROM_CLICK));
 
         editingItem();
         deleteItem();
+        exitApp();
     }
 
     private void editingItem() {
@@ -89,6 +92,12 @@ public class DetailFragment extends Fragment {
             final String thisText = editText.getText().toString();
             TextDatabase.getInstance().deleteText(thisText);
             fragmentInterface.moveToDisplayFragment();
+        });
+    }
+
+    private void exitApp(){
+        exitButton.setOnClickListener( v -> {
+            getActivity().finish();
         });
     }
 
