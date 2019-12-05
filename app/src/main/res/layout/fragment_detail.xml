@@ -15,7 +15,7 @@
         android:padding="5dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
-        
+
         <EditText
             android:id="@+id/chosen_textView"
             android:layout_width="match_parent"

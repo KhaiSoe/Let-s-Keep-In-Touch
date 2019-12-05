@@ -42,10 +42,10 @@
     <string name="pickStorage_intent">image/*</string>
     <string name="delete_text">Delete Text</string>
     <string name="add_text">Add Text</string>
-    <string name="next_fragment">Next</string>
+    <string name="next_fragment">Show List</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
-    <string name="gitHub_string">https://github.com/KhaiSoe/CYOA_Pursuit_HW_SOE_KHAING</string>
+    <string name="gitHub_string">https://github.com/KhaiSoe/Let-s-Keep-In-Touch</string>
     <string name="linkedIn_string">https://www.linkedin.com/in/khaing-m-soe/</string>
     <string name="permission_denied">Permission denied!</string>
     <string name="error">Error</string>
