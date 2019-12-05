@@ -9,81 +9,79 @@
     tools:context=".fragments.DetailFragment">
 
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp">
+
+
+        <EditText
+            android:id="@+id/chosen_textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:inputType="text"
+            android:text="@string/hello_blank_fragment" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
             android:layout_marginTop="8dp"
             android:padding="5dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
 
-
-            <EditText
-                android:id="@+id/chosen_textView"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/hello_blank_fragment"
-                android:inputType="text"
-                 />
-
+            <Button
+                android:id="@+id/save_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/save"
+                android:textAlignment="center"
+                android:textColor="#ffffff" />
         </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="80dp"
+            android:padding="5dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+
+            <Button
+                android:id="@+id/delete_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="8dp"
-                android:padding="5dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                android:layout_gravity="center"
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/delete"
+                android:textAlignment="center"
+                android:textColor="#ffffff" />
+        </androidx.cardview.widget.CardView>
 
-                <Button
-                    android:id="@+id/save_editText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="#000000"
-                    android:text="@string/save"
-                    android:textColor="#ffffff" />
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="80dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="32dp"
-                android:padding="5dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-
-                <Button
-                    android:id="@+id/delete_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:background="#000000"
-                    android:text="@string/delete"
-                    android:textColor="#ffffff" />
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
