@@ -51,6 +51,7 @@
     <string name="error">Error</string>
     <string name="text_request">Please enter something...</string>
     <string name="frag_request">must implement FragmentInterface</string>
+    <string name="exit_app">Exit App</string>
 
 
 </resources>
