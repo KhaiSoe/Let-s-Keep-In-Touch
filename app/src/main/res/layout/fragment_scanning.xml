@@ -73,14 +73,8 @@
 
                     <Button
                         android:id="@+id/save_editText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:background="#000000"
-                        android:gravity="center"
-                        android:text="@string/save_text"
-                        android:textColor="#ffffff" />
+                        style="@style/scanning_frag_button_style"
+                        android:text="@string/save_text" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -96,7 +90,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:padding="5dp"
+                    tools:ignore="ExtraText">
 
                     <TextView
                         android:id="@+id/show_image"
@@ -127,15 +122,8 @@
 
                         <Button
                             android:id="@+id/next_fragment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="16dp"
-                            android:background="#000000"
-                            android:gravity="center"
-                            android:padding="8dp"
-                            android:text="@string/next_fragment"
-                            android:textColor="#ffffff" />
+                            style="@style/scanning_frag_button_style"
+                            android:text="@string/next_fragment" />
                     </androidx.cardview.widget.CardView>
 
 

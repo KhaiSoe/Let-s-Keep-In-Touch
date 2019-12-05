@@ -323,11 +323,12 @@ public class ScanningFragment extends Fragment {
         nextButton.setOnClickListener(v -> fragmentInterface.moveToDisplayFragment());
     }
 
-
     @Override
     public void onDetach() {
         fragmentInterface = null;
         super.onDetach();
     }
+
+
 
 }

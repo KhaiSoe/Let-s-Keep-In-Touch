@@ -8,14 +8,7 @@
 
     <TextView
         android:id="@+id/splash_textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="30dp"
-        android:gravity="center_vertical"
         android:text="@string/title"
-        android:textColor="#D3B1C2"
-        android:textSize="40sp"
-        android:textStyle="italic" />
+        style="@style/splash_style" />
 
 </FrameLayout>
