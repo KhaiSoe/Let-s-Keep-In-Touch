@@ -45,6 +45,12 @@
     <string name="next_fragment">Next</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
+    <string name="gitHub_string">https://github.com/KhaiSoe/CYOA_Pursuit_HW_SOE_KHAING</string>
+    <string name="linkedIn_string">https://www.linkedin.com/in/khaing-m-soe/</string>
+    <string name="permission_denied">Permission denied!</string>
+    <string name="error">Error</string>
+    <string name="text_request">Please enter something...</string>
+    <string name="frag_request">must implement FragmentInterface</string>
 
 
 </resources>

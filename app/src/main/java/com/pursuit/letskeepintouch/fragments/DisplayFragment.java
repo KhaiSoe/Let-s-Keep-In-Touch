@@ -47,7 +47,7 @@ public class DisplayFragment extends Fragment {
         if (context instanceof FragmentInterface) {
             fragmentInterface = (FragmentInterface) context;
         } else {
-            throw new RuntimeException(context.toString() + "must implement FragmentInterface");
+            throw new RuntimeException(context.toString() + getString(R.string.frag_request));
         }
     }
 

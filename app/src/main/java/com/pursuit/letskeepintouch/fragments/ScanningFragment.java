@@ -80,11 +80,12 @@ public class ScanningFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof FragmentInterface){
+        if (context instanceof FragmentInterface) {
             fragmentInterface = (FragmentInterface) context;
         } else {
             throw new RuntimeException(context.toString() + "must implement FragmentInterface");
-        }    }
+        }
+    }
 
 
     @Override
@@ -166,13 +167,13 @@ public class ScanningFragment extends Fragment {
 
         contactDialog.setItems(contactItems, (DialogInterface dialog1, int which) -> {
             if (which == 0) {
-                Uri gitUri = Uri.parse("https://github.com/KhaiSoe/CYOA_Pursuit_HW_SOE_KHAING");
+                Uri gitUri = Uri.parse(getString(R.string.gitHub_string));
                 Intent gitIntent = new Intent(Intent.ACTION_VIEW, gitUri);
                 startActivity(gitIntent);
 
             } else {
                 if (which == 1) {
-                    Uri linkedinUri = Uri.parse("https://www.linkedin.com/in/khaing-m-soe/");
+                    Uri linkedinUri = Uri.parse(getString(R.string.linkedIn_string));
                     Intent linkedinIntent = new Intent(Intent.ACTION_VIEW, linkedinUri);
                     startActivity(linkedinIntent);
                 }
@@ -231,7 +232,7 @@ public class ScanningFragment extends Fragment {
                     if (cameraAccepted && writeStorageAccepted) {
                         pickCamera();
                     } else {
-                        Toast.makeText(getActivity(), "Permission denied!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -242,7 +243,7 @@ public class ScanningFragment extends Fragment {
                     if (writeStorageAccepted) {
                         pickStorage();
                     } else {
-                        Toast.makeText(getActivity(), "Permission denied!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -289,7 +290,7 @@ public class ScanningFragment extends Fragment {
         TextRecognizer textRecognizer = new TextRecognizer.Builder(requireContext()).build();
 
         if (!textRecognizer.isOperational()) {
-            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
         } else {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
             SparseArray<TextBlock> items = textRecognizer.detect(frame);
@@ -309,16 +310,16 @@ public class ScanningFragment extends Fragment {
         saveButton.setOnClickListener(v -> {
             croppedTextString = editText.getText().toString();
             if (croppedTextString.isEmpty()) {
-                Toast.makeText(getActivity(), "Please enter something...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.text_request), Toast.LENGTH_SHORT).show();
             } else {
                 TextDatabase.getInstance().addText(croppedTextString);
-               fragmentInterface.moveToDisplayFragment();
+                fragmentInterface.moveToDisplayFragment();
             }
         });
 
     }
 
-    private void toNextFragment(){
+    private void toNextFragment() {
         nextButton.setOnClickListener(v -> fragmentInterface.moveToDisplayFragment());
     }
 
