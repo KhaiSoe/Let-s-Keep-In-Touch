@@ -23,16 +23,11 @@
 
             <TextView
                 android:id="@+id/cropped_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="30sp"
                 app:layout_constraintBottom_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/itemview_text_style" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
