@@ -40,14 +40,9 @@
 
                     <TextView
                         android:id="@+id/show_result"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="#000000"
-                        android:gravity="center"
+                        style="@style/scanning_textview_style"
                         android:text="@string/result"
-                        android:textColor="#ffffff"
-                        android:textSize="20sp" />
+                        />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -92,14 +87,9 @@
 
                     <TextView
                         android:id="@+id/show_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="#000000"
-                        android:gravity="center"
+                        style="@style/scanning_textview_style"
                         android:text="@string/image_preview"
-                        android:textColor="#ffffff"
-                        android:textSize="20sp" />
+                         />
 
                     <ImageView
                         android:id="@+id/scanned_image"
